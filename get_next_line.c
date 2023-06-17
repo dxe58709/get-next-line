@@ -6,11 +6,12 @@
 /*   By: nsakanou <nsakanou@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 15:33:40 by nsakanou          #+#    #+#             */
-/*   Updated: 2023/06/16 18:18:08 by nsakanou         ###   ########.fr       */
+/*   Updated: 2023/06/17 21:53:11 by nsakanou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+//read_line,分割するやつ、main
 
 char	*read_line(int fd, char *memo, char *line)
 {
@@ -22,7 +23,7 @@ char	*read_line(int fd, char *memo, char *line)
 		return (NULL);
 }
 
-char	*get_line(int fd, char *memo, char *line)
+char	*get_line(int fd, char *memo, char *line) //分割するやつ入れる
 {
 	size_t	i;
 
@@ -45,4 +46,3 @@ char	*get_next_line(int fd)
 
 	if (!memo || BUFFER_SIZE < 0)
 		return (NULL);
-
