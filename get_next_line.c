@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsakanou <nsakanou@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: N <nsakanou@student.42tokyo.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 15:33:40 by nsakanou          #+#    #+#             */
-/*   Updated: 2023/06/19 20:02:52 by nsakanou         ###   ########.fr       */
+/*   Updated: 2023/06/22 00:43:04 by N                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,17 @@ char	*get_line(char *memo)
 	char	*line;
 
 	i = 0;
-	if (!memo[i])
-		return (NULL);
 	while (memo[i] && memo[i] != '\n')
 		i++;
-	line = (char *)malloc((i + 2) * (sizeof(char)));
+	if (!memo[i])//ヌル終端の時、つまり改行文字が見つからなかった時
+	{
+		free (memo);
+		return (NULL);
+	}
+	line = malloc((i + 2) * (sizeof(char)));
 	if (!line)
 		return (NULL);
-	ft_strlcpy(line, memo, (i + 2));
+	ft_strlcpy(line, memo, (i + 1));
 	return (line);
 }
 
@@ -37,7 +40,7 @@ char	*save_tmp(char *memo)
 	size_t	i;
 
 	i = 0;
-	len = ft_strlen(*memo);
+	len = ft_strlen(memo);
 	while (memo[i] && memo[i] != '\n')
 		i++;
 	tmp = (char *)malloc((len - i + 1) * (sizeof(char)));
@@ -47,21 +50,48 @@ char	*save_tmp(char *memo)
 	return (tmp);
 }
 
+char	*read_file(int fd, char *line)
+{
+	char	*buf;
+	size_t	readbyte;
+
+	if (!line)
+		return (NULL);
+
+	buf = malloc((BUFFER_SIZE + 1) * (sizeof(char)));
+	if (!buf)
+		return (NULL);
+	readbyte = 1;
+	while (readbyte > 0)
+	{
+		readbyte = read(fd, buf, BUFFER_SIZE);
+		if (readbyte == -1)//読み込んだreadがerrorの場合
+		{
+			free (buf);
+			return (NULL);
+		}
+		buf[readbyte] = '\0';
+		line = ft_strjoin(line, buf);
+		if (ft_strchr(line, '\n'))
+			break;
+	}
+	free (buf);
+	return (line);
+}
+
 char	*get_next_line(int fd)
 {
 	char		*buf;
 	char		*line;
 	static char	*save;
-	ssize_t		bytes_read;
+	size_t		bytes_read;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
-	buf = (char *)malloc((BUFFER_SIZE + 1) * (sizeof(char)));
-	if (!buf)
+	save = read_file(fd, save);
+	if (!save)
 		return (NULL);
-	bytes_read = read(fd, buf, BUFFER_SIZE);
-	buf[bytes_read] = '\0';
-	line = get_line(buf);
-	save = save_tmp(buf);
+	line = get_line(save);
+	save = save_tmp(save);
 	return (line);
 }

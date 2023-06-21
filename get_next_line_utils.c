@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsakanou <nsakanou@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: N <nsakanou@student.42tokyo.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 15:33:30 by nsakanou          #+#    #+#             */
-/*   Updated: 2023/06/19 19:39:36 by nsakanou         ###   ########.fr       */
+/*   Updated: 2023/06/22 00:43:20 by N                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{
-	size_t	i;
-
-	i = 0;
-	if (dst == NULL || src == NULL)
-		return (NULL);
-	if (dstsize == 0)
-		return (ft_strlen(src));
-	while (src[i] != '\0' && i < (dstsize - 1))
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (ft_strlen(src));
-}
 
 size_t	ft_strlen(const char *str)
 {
@@ -40,6 +22,24 @@ size_t	ft_strlen(const char *str)
 		i++;
 	}
 	return (i);
+}
+
+size_t  ft_strlcpy(char *dst, const char *src, size_t dstsize)
+{       
+        size_t  i;
+        size_t  len;
+        
+        i = 0;
+        len = ft_strlen(src);
+        if (dstsize == 0)
+                return (len);
+        while (src[i] != '\0' && i < (dstsize - 1))
+        {       
+                dst[i] = src[i];
+                i++;
+        }       
+        dst[i] = '\0';
+        return (ft_strlen(src));
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -59,3 +59,17 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_strlcpy(new + s1_len, s2, s2_len + 1);
 	return (new);
 }
+
+char	*ft_strchr(const char *s, int c)
+{
+	char	chr;
+
+	chr = (char)c;
+	while (*s != '\0' || chr == '\0')
+	{
+		if (*s == chr)
+			return ((char *)s);
+		s++;
+	}
+	return (NULL);
+}       

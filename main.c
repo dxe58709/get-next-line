@@ -3,19 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsakanou <nsakanou@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: N <nsakanou@student.42tokyo.jp>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 19:50:46 by nsakanou          #+#    #+#             */
-/*   Updated: 2023/06/19 16:25:57 by nsakanou         ###   ########.fr       */
+/*   Updated: 2023/06/22 00:37:16 by N                ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "get_next_line.h"
-#include <unistd.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include <stdlib.h>
+#include "get_next_line.h"
 
+/*
 int	main()
 {
 	int	i = 0;
@@ -35,6 +32,20 @@ int	main()
 		printf("%d:%s", i, line);
 		free(line);
 	}
+	close(fd);
+	return (0);
+}*/
+
+#include <stdio.h>
+
+int	main()
+{
+	int fd;
+
+	fd = open("a.txt", O_RDONLY);
+	printf("%d\n", fd);
+	printf("%d\n", get_next_line(fd));
+	printf("%ds\n", get_next_line(fd));
 	close(fd);
 	return (0);
 }
