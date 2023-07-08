@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsakanou <nsakanou@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/22 15:11:58 by nsakanou          #+#    #+#             */
-/*   Updated: 2023/06/27 23:22:31 by nsakanou         ###   ########.fr       */
+/*   Created: 2023/06/26 15:51:10 by nsakanou          #+#    #+#             */
+/*   Updated: 2023/06/27 18:01:32 by nsakanou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_free(char *str)
 {
@@ -25,13 +25,12 @@ char	*join_line(int fd, char *line)
 	char	*tmpline;
 
 	buf = malloc((BUFFER_SIZE + 1) * (sizeof(char)));
-	if (!buf && line)
-		return (ft_free(line));
+	if (!buf)
+		return (NULL);
 	readbyte = 1;
 	while (readbyte > 0)
 	{
 		readbyte = read(fd, buf, BUFFER_SIZE);
-	printf("[rb:%d]",readbyte);
 		if (readbyte == -1)
 			ft_free(buf);
 		buf[readbyte] = '\0';
@@ -90,14 +89,14 @@ char	*save_tmp(char *memo)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*save;
+	static char	*save[OPEN_MAX];
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
-	save = join_line(fd, save);
-	if (!save)
-		return (ft_free(save));
-	line = get_line(save);
-	save = save_tmp(save);
+	save[fd] = join_line(fd, save[fd]);
+	if (!save[fd])
+		return (ft_free(save[fd]));
+	line = get_line(save[fd]);
+	save[fd] = save_tmp(save[fd]);
 	return (line);
 }
