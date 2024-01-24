@@ -16,12 +16,12 @@ $ git clone https://github.com/dxe58709/get_next_line; cd get_next_line
 Compile the executable file with:
 
 ```zsh
-$ gcc -Wall -Wextra -Werror -D BUFFER_SIZE=xx get_next_line.c get_next_line_utils.c
+$ gcc -Wall -Wextra -Werror -D BUFFER_SIZE=xx get_next_line.c get_next_line_utils.c get_next_line.h
 ```
-You must change the xx part to any value.
+__You must change the xx part to any value.__
 
 Or use the following command to compile it with the bonus files:
 
 ```zsh
-$ gcc -Wall -Wextra -Werror -D BUFFER_SIZE=xx get_next_line_bonus.c get_next_line_bonus_utils.c
+$ gcc -Wall -Wextra -Werror -D BUFFER_SIZE=xx get_next_line_bonus.c get_next_line_utils_bonus.c get_next_line_bonus.h
 ```
