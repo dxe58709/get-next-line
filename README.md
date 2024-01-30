@@ -11,7 +11,8 @@ This function is not a stand-alone program, its files must be included and compi
 First, clone this repository and `cd` into it:
 
 ```zsh
-$ git clone https://github.com/dxe58709/get_next_line; cd get_next_line
+#!/bin/zsh
+git clone https://github.com/dxe58709/get_next_line; cd get_next_line
 ```
 
 Example ``main.c``:
@@ -40,30 +41,35 @@ int	main(int argc, char **argv)
 ```
 
 Compilation:
-```bash
-$ gcc main.c get_next_line.c get_next_line_utils.c
+```zsh
+#!/bin/zsh
+gcc main.c get_next_line.c get_next_line_utils.c
 ```
 
 ``BUFFER_SIZE`` can be specified at compilation to override the default ``BUFFER_SIZE``:
 
 ```zsh
-$ gcc -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c
+#!/bin/zsh
+gcc -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c
 ```
 
 Or use the following command to compile it with the bonus files:
 
 ```zsh
-$ gcc -D BUFFER_SIZE=42 get_next_line_bonus.c get_next_line_utils_bonus.c
+#!/bin/zsh
+gcc -D BUFFER_SIZE=42 get_next_line_bonus.c get_next_line_utils_bonus.c
 ```
 
 Execution:
-```bash
-$ ./a.out [file]
+```zsh
+#!/bin/zsh
+./a.out [file]
 ```
 Output should show the entire contents of the given file.
 
 Execution with stdin:
-```bash
-$ ./a.out /dev/tty
+```zsh
+#!/bin/zsh
+./a.out /dev/tty
 ```
 Program will wait for input, then once the enter key is pressed, print out the input as well as get_next_line's output. The process can be killed with ``ctrl-c``.
